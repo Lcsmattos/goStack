@@ -12,14 +12,15 @@ let sendForgotPasswordEmail: SendForgotPasswordEmailService;
 
 describe('SendForgotPasswordEmail', () => {
   beforeEach(() => {
-    fakeUsersRepository = new FakeUsersRepository();
     fakeMailProvider = new FakeMailProvider();
+    fakeUsersRepository = new FakeUsersRepository();
+
     fakeUserTokensRepository = new FakeUserTokenRepository();
 
     sendForgotPasswordEmail = new SendForgotPasswordEmailService(
+      fakeUserTokensRepository,
       fakeUsersRepository,
       fakeMailProvider,
-      fakeUserTokensRepository,
     );
   });
   it('should be able to recover the password using the e-mail', async () => {
