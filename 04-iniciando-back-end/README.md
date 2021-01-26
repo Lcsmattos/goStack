@@ -1,4 +1,4 @@
-# Recuperação de Senha
+# Recuperação de Senha - OK
 
 **Requisitos Funcionais** -Quais são as funcionalidades dentro da recuperação de senha-
 
