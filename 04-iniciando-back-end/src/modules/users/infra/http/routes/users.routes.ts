@@ -10,7 +10,7 @@ import ensureAuthenticated from '../middlewares/ensureAuthenticaded';
 const usersRouter = Router();
 const userAvatarController = new UserAvatarController();
 const usersController = new UsersController();
-const upload = multer(uploadConfig);
+const upload = multer(uploadConfig.multer);
 // Rota: Receber a requisição, chamar outro arquivo e devolver uma resposta
 
 usersRouter.post(
