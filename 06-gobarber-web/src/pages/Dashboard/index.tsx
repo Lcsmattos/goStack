@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 // eslint-disable-next-line import/no-duplicates
-import { isToday, format } from 'date-fns';
+import { isToday, format, parseISO } from 'date-fns';
 // eslint-disable-next-line import/no-duplicates
 import ptBR from 'date-fns/locale/pt-BR';
 import DayPicker, { DayModifiers } from 'react-day-picker';
@@ -78,12 +78,11 @@ const Dashboard: React.FC = () => {
         params: {
           year: selectedDate.getFullYear(),
           month: selectedDate.getMonth() + 1,
-          day: selectedDate,
+          day: selectedDate.getDate(),
         },
       })
       .then(response => {
         setAppointments(response.data);
-        console.log(response.data);
       });
   }, [selectedDate]);
 
@@ -107,6 +106,18 @@ const Dashboard: React.FC = () => {
   const selectedWeekDay = useMemo(() => {
     return format(selectedDate, 'cccc', { locale: ptBR });
   }, [selectedDate]);
+
+  const morningAppointments = useMemo(() => {
+    return appointments.filter(appointment => {
+      return parseISO(appointment.date).getHours() < 12;
+    });
+  }, [appointments]);
+
+  // const afternoonAppointments = useMemo(() => {
+  //   return appointments.filter(appointment => {
+  //     return parseISO(appointment.date).getHours() >= 12;
+  //   });
+  // }, [appointments]);
 
   return (
     <Container>
@@ -153,33 +164,22 @@ const Dashboard: React.FC = () => {
 
           <Section>
             <strong>Manhã</strong>
-            <Appointment>
-              <span>
-                <FiClock />
-                08:00
-              </span>
-              <div>
-                <img
-                  src="https://avatars.githubusercontent.com/u/61248542?s=460&u=3fa8e5dacbd3f622f909c8d68cef9948856281cb&v=4"
-                  alt="Lucas Mattos"
-                />
-                <strong>Lucas Mattos</strong>
-              </div>
-            </Appointment>
 
-            <Appointment>
-              <span>
-                <FiClock />
-                08:00
-              </span>
-              <div>
-                <img
-                  src="https://avatars.githubusercontent.com/u/61248542?s=460&u=3fa8e5dacbd3f622f909c8d68cef9948856281cb&v=4"
-                  alt="Lucas Mattos"
-                />
-                <strong>Lucas Mattos</strong>
-              </div>
-            </Appointment>
+            {morningAppointments.map(appointment => (
+              <Appointment>
+                <span>
+                  <FiClock />
+                  08:00
+                </span>
+                <div>
+                  <img
+                    src={appointment.user.avatar_url}
+                    alt={appointment.user.name}
+                  />
+                  <strong>{appointment.user.name}</strong>
+                </div>
+              </Appointment>
+            ))}
           </Section>
           <Section>
             <strong>Tarde</strong>
