@@ -38,7 +38,7 @@ class User {
   // eslint-disable-next-line camelcase
   updated_at: Date;
 
-  @Expose({ name: 'avatar_url ' })
+  @Expose({ name: 'avatar_url' })
   getAvatarUrl(): string | null {
     if (!this.avatar) {
       return null;
