@@ -14,7 +14,6 @@ import * as Yup from 'yup';
 
 import { Form } from '@unform/mobile';
 import { FormHandles } from '@unform/core';
-
 import { useAuth } from '../../hooks/auth';
 
 import getValidationErrors from '../../utils/getValidationError';
@@ -44,9 +43,7 @@ const SignIn: React.FC = () => {
 
   const navigation = useNavigation();
 
-  const { signIn, user } = useAuth();
-
-  console.log(user);
+  const { signIn } = useAuth();
 
   const handleSignIn = useCallback(
     async (data: SignInFormData) => {
@@ -62,6 +59,8 @@ const SignIn: React.FC = () => {
         await schema.validate(data, {
           abortEarly: false,
         });
+
+        console.log(data);
 
         await signIn({
           email: data.email,
@@ -131,6 +130,7 @@ const SignIn: React.FC = () => {
               <Button
                 onPress={() => {
                   formRef.current?.submitForm();
+                  console.log(formRef.current?.submitForm());
                 }}
               >
                 Entrar
@@ -139,7 +139,7 @@ const SignIn: React.FC = () => {
 
             <ForgotPassword
               onPress={() => {
-                console.log('Deu certo');
+                console.log('Forgot Password');
               }}
             >
               <ForgotPasswordText>Esqueci Minha Senha</ForgotPasswordText>

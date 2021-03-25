@@ -64,7 +64,7 @@ const SignUp: React.FC = () => {
           'Você já pode realizar o logon na aplicação',
         );
 
-        navigation.navigate('SignIn');
+        navigation.goBack();
       } catch (err) {
         if (err instanceof Yup.ValidationError) {
           const errors = getValidationErrors(err);
