@@ -60,8 +60,6 @@ const SignIn: React.FC = () => {
           abortEarly: false,
         });
 
-        console.log(data);
-
         await signIn({
           email: data.email,
           password: data.password,
@@ -130,7 +128,6 @@ const SignIn: React.FC = () => {
               <Button
                 onPress={() => {
                   formRef.current?.submitForm();
-                  console.log(formRef.current?.submitForm());
                 }}
               >
                 Entrar
