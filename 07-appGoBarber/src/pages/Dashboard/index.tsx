@@ -2,6 +2,7 @@
 import React, { useCallback, useEffect, useState } from 'react';
 
 import { useNavigation } from '@react-navigation/native';
+import Icon from 'react-native-vector-icons/Feather';
 import { useAuth } from '../../hooks/auth';
 import api from '../../services/api';
 
@@ -12,9 +13,17 @@ import {
   UserName,
   ProfileButton,
   UserAvatar,
+  ProvidersList,
+  ProvidersListTitle,
+  ProviderContainer,
+  ProvidersAvatar,
+  ProviderInfo,
+  ProviderName,
+  ProviderMeta,
+  ProviderMetaText,
 } from './styles';
 
-interface Provider {
+export interface Provider {
   id: string;
   name: string;
   avatar_url: string;
@@ -37,6 +46,13 @@ const Dashboard: React.FC = () => {
     signOut();
   }, [signOut]);
 
+  const navigateToCreateAppointment = useCallback(
+    (providerId: string) => {
+      navigate('CreateAppointment', { providerId });
+    },
+    [navigate],
+  );
+
   return (
     <Container>
       <Header>
@@ -49,6 +65,32 @@ const Dashboard: React.FC = () => {
           <UserAvatar source={{ uri: user.avatar_url }} />
         </ProfileButton>
       </Header>
+      <ProvidersList
+        data={providers}
+        keyExtractor={provider => provider.id}
+        ListHeaderComponent={<ProvidersListTitle>Barbeiros</ProvidersListTitle>}
+        renderItem={({ item: provider }) => (
+          <ProviderContainer
+            onPress={() => navigateToCreateAppointment(provider.id)}
+          >
+            <ProvidersAvatar source={{ uri: provider.avatar_url }} />
+
+            <ProviderInfo>
+              <ProviderName>{provider.name}</ProviderName>
+
+              <ProviderMeta>
+                <Icon name="calendar" size={14} color="#ff9000" />
+                <ProviderMetaText>Segunda à Sexta</ProviderMetaText>
+              </ProviderMeta>
+
+              <ProviderMeta>
+                <Icon name="clock" size={14} color="#ff9000" />
+                <ProviderMetaText>08h às 18h</ProviderMetaText>
+              </ProviderMeta>
+            </ProviderInfo>
+          </ProviderContainer>
+        )}
+      />
     </Container>
   );
 };
