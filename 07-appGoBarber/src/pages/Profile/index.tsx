@@ -25,8 +25,10 @@ import Input from '../../components/Input';
 
 import {
   Container,
-  Title,
+  HeaderContainer,
   BackButton,
+  LogOutButton,
+  Title,
   UserAvatarButton,
   UserAvatar,
 } from './styles';
@@ -41,7 +43,7 @@ interface ProfileFormData {
 }
 
 const Profile: React.FC = () => {
-  const { user, updateUser } = useAuth();
+  const { user, updateUser, signOut } = useAuth();
   const formRef = useRef<FormHandles>(null);
   const navigation = useNavigation();
 
@@ -67,12 +69,12 @@ const Profile: React.FC = () => {
             otherwise: Yup.string(),
           }),
           password_confirmation: Yup.string()
-            .when('old_password', {
+            .when('password', {
               is: val => !!val.length,
               then: Yup.string().required('Campo Obrigatório!'),
               otherwise: Yup.string(),
             })
-            .oneOf([Yup.ref('password')], 'Confirmação Incorreta'),
+            .oneOf([Yup.ref('old_password')], 'Confirmação Incorreta'),
         });
 
         await schema.validate(data, {
@@ -161,6 +163,11 @@ const Profile: React.FC = () => {
     navigation.goBack();
   }, [navigation]);
 
+  const handleLogOut = useCallback(() => {
+    Alert.alert('Logout Realizado, Volte sempre ;D');
+    signOut();
+  }, [signOut]);
+
   return (
     <>
       <KeyboardAvoidingView
@@ -173,9 +180,15 @@ const Profile: React.FC = () => {
           contentContainerStyle={{ flex: 1 }}
         >
           <Container>
-            <BackButton onPress={handleGoBack}>
-              <Icon name="chevron-left" size={24} color="#999591" />
-            </BackButton>
+            <HeaderContainer>
+              <BackButton onPress={handleGoBack}>
+                <Icon name="chevron-left" size={25} color="#999591" />
+              </BackButton>
+
+              <LogOutButton onPress={handleLogOut}>
+                <Icon name="log-out" size={24} color="#999591" />
+              </LogOutButton>
+            </HeaderContainer>
 
             <UserAvatarButton onPress={handleUpdateAvatar}>
               <UserAvatar source={{ uri: user.avatar_url }} />

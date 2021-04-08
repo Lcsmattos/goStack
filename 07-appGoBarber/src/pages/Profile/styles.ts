@@ -8,15 +8,21 @@ export const Container = styled.View`
   margin-top: 10px;
 `;
 
+export const HeaderContainer = styled.View`
+  padding-top: 60px;
+  flex-direction: row;
+  justify-content: space-between;
+`;
+
+export const BackButton = styled.TouchableOpacity``;
+
+export const LogOutButton = styled.TouchableOpacity``;
+
 export const Title = styled.Text`
-  font-size: 20px;
+  font-size: 24px;
   color: #f4ede8;
   font-family: 'RobotoSlab-Medium';
   margin: 24px 0;
-`;
-
-export const BackButton = styled.TouchableOpacity`
-  margin-top: 50px;
 `;
 
 export const UserAvatarButton = styled.TouchableOpacity``;
