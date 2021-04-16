@@ -68,10 +68,13 @@
     ]
   },
   "devDependencies": {
+    "@testing-library/react-hooks": "^5.1.1",
     "@types/styled-components": "^5.1.4",
+    "axios-mock-adapter": "^1.19.0",
     "eslint-config-prettier": "^6.15.0",
     "eslint-import-resolver-typescript": "^2.3.0",
     "eslint-plugin-prettier": "^3.1.4",
-    "prettier": "^2.2.0"
+    "prettier": "^2.2.0",
+    "react-test-render": "^1.1.2"
   }
 }
