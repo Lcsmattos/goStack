@@ -3,7 +3,7 @@
 node_modules/
 build/
 temp/
-coverages
+coverage/
 .env
 ormconfig.json
 dist
